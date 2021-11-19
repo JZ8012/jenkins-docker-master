@@ -59,7 +59,7 @@ EXPOSE 8080 50000
 # establishing a symbolic link for that guy as well, so that existing plugins in JENKINS_HOME/plugins pointing to 
 # /usr/lib64/jenkins will subsequently get redirected to /usr/lib/jenkins; it is confirmed that the 3.7 jenkins RHEL images 
 # do *NOT* have a /usr/lib64/jenkins path
-RUN ln -s /usr/lib/jenkins /usr/lib64/jenkins && \
+RUN ln -s /usr/lib/jenkins && \
     INSTALL_PKGS="dejavu-sans-fonts wget rsync gettext git tar zip unzip openssl bzip2 java-11-openjdk java-11-openjdk-devel java-1.8.0-openjdk java-1.8.0-openjdk-devel jq" && \
     yum install -y $INSTALL_PKGS && \
     rpm -V  $INSTALL_PKGS && \
@@ -103,9 +103,6 @@ RUN /usr/local/bin/install-jenkins-core-plugins.sh /opt/openshift/base-plugins.t
     chgrp -R 0 /var/lib/jenkins/ && \
     chmod -R g+rwX /var/lib/jenkins/ && \
     chmod -R g=u /var/lib/jenkins/ && \
-    chgrp -R 0 /var/jenkins_home/ && \
-    chmod -R g+rwX /var/jenkins_home/ && \
-    chmod -R g=u /var/jenkins_home/
 
 VOLUME ["/var/lib/jenkins"]
 
