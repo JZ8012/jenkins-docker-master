@@ -99,7 +99,13 @@ RUN /usr/local/bin/install-jenkins-core-plugins.sh /opt/openshift/base-plugins.t
     /usr/local/bin/fix-permissions /opt/openshift && \
     /usr/local/bin/fix-permissions /opt/openshift/configuration/init.groovy.d && \
     /usr/local/bin/fix-permissions /var/lib/jenkins && \
-    /usr/local/bin/fix-permissions /var/log
+    /usr/local/bin/fix-permissions /var/log && \
+    chgrp -R 0 /var/lib/jenkins/ && \
+    chmod -R g+rwX /var/lib/jenkins/ && \
+    chmod -R g=u /var/lib/jenkins/ && \
+    chgrp -R 0 /var/jenkins_home/ && \
+    chmod -R g+rwX /var/jenkins_home/ && \
+    chmod -R g=u /var/jenkins_home/
 
 VOLUME ["/var/lib/jenkins"]
 
